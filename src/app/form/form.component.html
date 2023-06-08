@@ -1,0 +1,60 @@
+<section class="imatge" >
+    <article [hidden]="!hidden">
+      <h2>SEARCH OF FILMS</h2>
+      <select id="priceRange" (change)='setPrice()'>Price
+        <option value="10000">All price value films</option>
+        <option value="40">films until 40€</option>
+        <option value="30">films until 30€</option>
+        <option value="20">films until 20€</option>
+        <option value="10">films until 10€</option>
+      </select><input type="radio" [checked]="radio" (click)="setRadio()"><label>+16 age</label><br/><br/>
+      <label>Title</label><input type="text" id="titleSearch" (keyup)="setTitle()" value="" placeholder="search of title..."><br/><br/>
+      <label>Genere</label><input type="text" id="genereSearch" (keyup)="setGenere()" value="" placeholder="search of genere..."><br/><br/>
+      <select id="companyRange" (change)="setCompany()">Company
+        <option value="">All company from films</option>
+        <option value="FILMAX">FILMAX</option>
+        <option value="MARVEL">MARVEL</option>
+        <option value="UNIVERSAL">UNIVERSAL</option>
+        <option value="PARAMOND">PARAMOND</option>
+      </select><br/><br/>
+    </article>
+    <form (ngSubmit)="operCrud(myFormulari)" #myFormulari = "ngForm">
+      <article [hidden]="hidden">
+        <h2>CUSTOMER A FILM</h2>
+        <label>Title</label>
+        <input required type="text" id="title" name="title" [(ngModel)]="film.title" value="" placeholder="name of the title..." [ngClass]="{'invalid': !film.title}" [disabled]="row"/><br/><label>Genere</label>
+        <input required type="text" id="genere" name="genere" [(ngModel)]="film.genere" value="" placeholder="type of genere..." [ngClass]="{'invalid': !film.genere}" [disabled]="row"/><br/>
+        <input type="number" name="identi" [(ngModel)]="film.id" value="" disabled=""/>
+        <select name="company" id="company" [(ngModel)]="film.company" value="" [ngClass]="{'invalid': film.company === 'please, take a company...'}"  [disabled]="row">
+          <option>please, take a company...</option>
+          <option>FILMAX</option>
+          <option>MARVEL</option>
+          <option>UNIVERSAL</option>
+          <option>PARAMOND</option>
+        </select>
+        <br/><label>Price</label>
+        <input type="number" id="price"  name="price" [(ngModel)]="film.price" value="" [ngClass]="{'invalid': film.price === 0}" [disabled]="row"/><label>€</label>
+        <input type="checkbox" name="a18" [(ngModel)]="film.a18" [disabled]="row"/><label>Age 16</label>
+        <br/>
+        <textarea  name="descr" [(ngModel)]="film.descr" placeholder="Description to the film..." [disabled]="row"></textarea><br/><br/>
+      </article>
+      <button type="button" class="destroy" routerLink="/target">EXIT FILM</button>
+      <button type="submit" class="crud" [disabled]="!myFormulari.valid || film.price == 0 || film.company == 'please, take a company...'" >CRUD FILM</button>
+    </form>
+</section>
+<section *ngIf="films.length" class="tableHight">
+  <table class="table table-striped">
+    <tr class="table-dark"><th scope="col">N</th><th scope="col">Title</th><th scope="col">Genere</th><th scope="col">Company</th><th scope="col">Price</th></tr>
+    <tr *ngFor="let film of films; let i = index; let even = even" [ngClass]="{'altern': !!even}">
+      <th (click)="enviaFormulary(i)">{{ i + 1 + page }}</th><th (click)="enviaFormulary(i)">{{ film.title }}</th><th (click)="enviaFormulary(i)">{{ film.genere }}</th><th (click)="enviaFormulary(i)">{{ film.company }}</th><th (click)="enviaFormulary(i)">{{ film.price }}€</th>
+    </tr>
+  </table>
+</section>
+<section *ngIf="!films.length" class="tableHight">
+  <h2>There is not registred</h2>
+</section>
+<section>
+    <a *ngFor="let p of pages; let i = index;">
+      <button type="button" class="paginacio" [disabled]="selected[i]" (click)="selectFilm(i)">{{ i + 1 }}</button>
+    </a>
+</section>

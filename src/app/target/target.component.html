@@ -1,0 +1,12 @@
+<section class="imatge" [hidden]="getStVis()">
+  <h1>{{ title }}</h1>
+  <img src="../../assets/film.png" height="350" alt="discos"/>
+</section>
+<section [hidden]="getStVis()">
+  <button type="button" class="delete" (click) = "setStVis(true)" routerLink="/drop/10000">DROP FILM</button>
+  <button type="button" class="btCrud" (click) = setStVis(true) routerLink="/update/10000">UPDATE FILM</button>
+  <button type="button" class="btCrud" (click) = setStVis(true) routerLink="/list">LIST FILMS</button>
+  <button type="button" class="btCrud" (click) = setStVis(true) routerLink="/new"> NEW FILMS</button>
+</section>
+<app-message></app-message>
+

@@ -1,0 +1,7 @@
+<section class="secMsg" *ngIf="messageService.messages.length">
+  <h2 class="msgTl">Message</h2>
+  <ul>
+    <li *ngFor = 'let message of messageService.messages; let i = index;'>{{ i + 1 }}{{ message }}</li>
+  </ul>
+  <button type="button" class="msgBt" (click)="messageService.clear()">CLEAR MSG</button>
+</section>
